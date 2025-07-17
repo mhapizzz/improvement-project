@@ -1,7 +1,7 @@
 <template>
   <div class="stock-in">
     <h2>Stock IN</h2>
-    
+
     <div class="info">
       <p><strong>PO Number</strong> : 1100086756</p>
       <p><strong>SPB Number</strong> : 025/DO/HRS-AGM/VI/2025</p>
@@ -45,9 +45,9 @@ export default {
           stockCode: "SP00606599",
           partNumber: "23236859",
           description: "FRONT SPRING FMX400 NO.1",
-          qty: 3
-        }
-      ]
+          qty: 3,
+        },
+      ],
     };
   },
   methods: {
@@ -59,10 +59,10 @@ export default {
         stockCode: "",
         partNumber: "",
         description: "",
-        qty: 0
+        qty: 0,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -75,7 +75,8 @@ export default {
 .info p {
   margin: 4px 0;
 }
-.scan-button, .add-button {
+.scan-button,
+.add-button {
   margin: 16px 0;
   padding: 10px 20px;
   background-color: #f2f2f2;
@@ -86,7 +87,8 @@ export default {
   width: 100%;
   border-collapse: collapse;
 }
-.stock-table th, .stock-table td {
+.stock-table th,
+.stock-table td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;

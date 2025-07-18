@@ -1,22 +1,32 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <!-- Mobile sidebar overlay -->
-    <div
-      v-if="sidebarOpen"
-      class="fixed inset-0 z-40 lg:hidden"
-      @click="sidebarOpen = false"
-      style="transition: none !important;"
-    >
-      <div class="fixed inset-0 bg-black bg-opacity-50" style="transition: none !important;"></div>
+    <!-- Login/Register pages without layout -->
+    <div v-if="isAuthPage">
+      <router-view />
     </div>
 
-    <div class="flex">
+    <!-- Main app with layout -->
+    <div v-else>
+      <!-- Mobile sidebar overlay -->
+      <div
+        v-if="sidebarOpen"
+        class="fixed inset-0 z-40 lg:hidden"
+        @click="sidebarOpen = false"
+        style="transition: none !important"
+      >
+        <div
+          class="fixed inset-0 bg-black bg-opacity-50"
+          style="transition: none !important"
+        ></div>
+      </div>
+
+      <div class="flex">
       <!-- Sidebar -->
       <div
-        class="sidebar min-h-screen bg-white shadow-xl w-80 lg:w-64 fixed inset-y-0 left-0 z-50 lg:relative lg:z-auto lg:shadow-lg"
+        class="sidebar min-h-screen bg-white shadow-xl w-80 lg:w-64 fixed inset-y-0 left-0 z-50 lg:z-auto lg:shadow-lg"
         :style="{
           transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'transform 0.3s ease-in-out'
+          transition: 'transform 0.3s ease-in-out',
         }"
       >
         <!-- Sidebar header -->
@@ -85,6 +95,56 @@
             Dashboard
           </router-link>
           <router-link
+            to="/stock"
+            class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
+            :class="{
+              'bg-indigo-100 text-indigo-700 shadow-sm':
+                $route.path === '/stock',
+            }"
+            style="padding: 0 1rem"
+            @click="closeSidebarOnMobile"
+          >
+            <svg
+              class="h-5 w-5 text-indigo-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+            Stock List
+          </router-link>
+          <router-link
+            to="/items"
+            class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
+            :class="{
+              'bg-indigo-100 text-indigo-700 shadow-sm':
+                $route.path === '/items',
+            }"
+            style="padding: 0 1rem"
+            @click="closeSidebarOnMobile"
+          >
+            <svg
+              class="h-5 w-5 text-indigo-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              />
+            </svg>
+            Items
+          </router-link>
+          <router-link
             to="/stock/in"
             class="flex items-center gap-4 h-12 px-3 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-green-50 hover:text-green-700"
             :class="{
@@ -134,6 +194,31 @@
             </svg>
             Stock Out
           </router-link>
+
+          <router-link
+            to="/users"
+            class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-purple-50 hover:text-purple-700"
+            :class="{
+              'bg-purple-100 text-purple-700 shadow-sm': $route.path === '/users',
+            }"
+            style="padding: 0 1rem"
+            @click="closeSidebarOnMobile"
+          >
+            <svg
+              class="h-5 w-5 text-purple-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+              />
+            </svg>
+            User Management
+          </router-link>
         </div>
 
         <!-- Sidebar footer -->
@@ -155,7 +240,7 @@
       </div>
 
       <!-- Main content -->
-      <div class="flex-1 flex flex-col min-w-0">
+      <div class="flex-1 flex flex-col min-w-0 lg:ml-64">
         <!-- Top header -->
         <header
           class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40"
@@ -191,16 +276,17 @@
               <div class="flex items-center space-x-4">
                 <!-- Profile menu -->
                 <div class="relative">
-                  <button
+                  <router-link
+                    to="/profile"
                     class="flex items-center p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                   >
-                    <span class="sr-only">Open user menu</span>
+                    <span class="sr-only">User profile</span>
                     <div
                       class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center"
                     >
                       <span class="text-white font-medium text-sm">U</span>
                     </div>
-                  </button>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -214,6 +300,7 @@
           </div>
         </main>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -231,10 +318,18 @@ export default {
     const pageTitle = computed(() => {
       const routeToTitle = {
         "/": "Dashboard",
+        "/stock": "Stock List",
         "/stock/in": "Stock In",
         "/stock/out": "Stock Out",
+        "/items": "Items",
+        "/profile": "User Profile",
+        "/users": "User Management",
       };
       return routeToTitle[route.path] || "Dashboard";
+    });
+
+    const isAuthPage = computed(() => {
+      return route.path === "/login" || route.path === "/register";
     });
 
     const closeSidebarOnMobile = () => {
@@ -247,6 +342,7 @@ export default {
       sidebarOpen,
       pageTitle,
       closeSidebarOnMobile,
+      isAuthPage,
     };
   },
 };

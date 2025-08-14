@@ -21,130 +21,133 @@
       </div>
 
       <div class="flex">
-      <!-- Sidebar -->
-      <div
-        class="sidebar min-h-screen bg-white shadow-xl w-80 lg:w-64 fixed inset-y-0 left-0 z-50 lg:z-auto lg:shadow-lg"
-        :style="{
-          transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'transform 0.3s ease-in-out',
-        }"
-      >
-        <!-- Sidebar header -->
+        <!-- Sidebar -->
         <div
-          class="flex items-center justify-center h-32 px-6 border-b border-gray-200 bg-gradient-to-r from-indigo-600 to-purple-600 relative"
+          class="sidebar min-h-screen bg-white shadow-xl w-80 lg:w-64 fixed inset-y-0 left-0 z-50 lg:z-auto lg:shadow-lg"
+          :style="{
+            transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
+            transition: 'transform 0.3s ease-in-out',
+          }"
         >
-          <h2 class="text-xl font-bold text-white">Inventory</h2>
-          <button
-            @click="sidebarOpen = false"
-            class="absolute top-2 right-2 lg:hidden p-2 rounded-md text-white hover:bg-white hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
+          <!-- Sidebar header -->
+          <div
+            class="flex items-center justify-center h-32 px-6 border-b border-gray-200 bg-gradient-to-r from-indigo-600 to-purple-600 relative"
           >
-            <span class="sr-only">Close sidebar</span>
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            <h2 class="text-xl font-bold text-white">Inventory</h2>
+            <button
+              @click="sidebarOpen = false"
+              class="absolute top-2 right-2 lg:hidden p-2 rounded-md text-white hover:bg-white hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
+              <span class="sr-only">Close sidebar</span>
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
 
-        <!-- Navigation -->
-        <div
-          class="w-full h-full"
-          style="
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            padding-top: 0.5rem;
-          "
-        >
-          <router-link
-            to="/"
-            class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
-            :class="{
-              'bg-indigo-100 text-indigo-700 shadow-sm': $route.path === '/',
-            }"
-            style="padding: 0 1rem"
-            @click="closeSidebarOnMobile"
+          <!-- Navigation -->
+          <div
+            class="w-full h-full"
+            style="
+              padding-left: 0.5rem;
+              padding-right: 0.5rem;
+              padding-top: 0.5rem;
+            "
           >
-            <svg
-              class="h-5 w-5 text-indigo-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            <router-link
+              to="/"
+              class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
+              :class="{
+                'bg-indigo-100 text-indigo-700 shadow-sm': $route.path === '/',
+              }"
+              style="padding: 0 1rem"
+              @click="closeSidebarOnMobile"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"
-              />
-            </svg>
-            Dashboard
-          </router-link>
-          <router-link
-            to="/stock"
-            class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
-            :class="{
-              'bg-indigo-100 text-indigo-700 shadow-sm':
-                $route.path === '/stock',
-            }"
-            style="padding: 0 1rem"
-            @click="closeSidebarOnMobile"
-          >
-            <svg
-              class="h-5 w-5 text-indigo-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              <svg
+                class="h-5 w-5 text-indigo-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"
+                />
+              </svg>
+              Dashboard
+            </router-link>
+
+            <router-link
+              to="/items"
+              class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
+              :class="{
+                'bg-indigo-100 text-indigo-700 shadow-sm':
+                  $route.path === '/items',
+              }"
+              style="padding: 0 1rem"
+              @click="closeSidebarOnMobile"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
-            Stock List
-          </router-link>
-          <router-link
-            to="/items"
-            class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
-            :class="{
-              'bg-indigo-100 text-indigo-700 shadow-sm':
-                $route.path === '/items',
-            }"
-            style="padding: 0 1rem"
-            @click="closeSidebarOnMobile"
-          >
-            <svg
-              class="h-5 w-5 text-indigo-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              <svg
+                class="h-5 w-5 text-indigo-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
+              </svg>
+              Items
+            </router-link>
+
+            <router-link
+              to="/stock"
+              class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700"
+              :class="{
+                'bg-indigo-100 text-indigo-700 shadow-sm':
+                  $route.path === '/stock',
+              }"
+              style="padding: 0 1rem"
+              @click="closeSidebarOnMobile"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-              />
-            </svg>
-            Items
-          </router-link>
-          <router-link
+              <svg
+                class="h-5 w-5 text-indigo-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                />
+              </svg>
+              Stock List
+            </router-link>
+
+            <!-- <router-link
             to="/stock/in"
             class="flex items-center gap-4 h-12 px-3 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-green-50 hover:text-green-700"
             :class="{
@@ -193,36 +196,37 @@
               />
             </svg>
             Stock Out
-          </router-link>
+          </router-link> -->
 
-          <router-link
-            to="/users"
-            class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-purple-50 hover:text-purple-700"
-            :class="{
-              'bg-purple-100 text-purple-700 shadow-sm': $route.path === '/users',
-            }"
-            style="padding: 0 1rem"
-            @click="closeSidebarOnMobile"
-          >
-            <svg
-              class="h-5 w-5 text-purple-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            <router-link
+              to="/users"
+              class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-purple-50 hover:text-purple-700"
+              :class="{
+                'bg-purple-100 text-purple-700 shadow-sm':
+                  $route.path === '/users',
+              }"
+              style="padding: 0 1rem"
+              @click="closeSidebarOnMobile"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-              />
-            </svg>
-            User Management
-          </router-link>
-        </div>
+              <svg
+                class="h-5 w-5 text-purple-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                />
+              </svg>
+              User Management
+            </router-link>
+          </div>
 
-        <!-- Sidebar footer -->
-        <!-- <div class="p-4 border-t border-gray-200">
+          <!-- Sidebar footer -->
+          <!-- <div class="p-4 border-t border-gray-200">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div
@@ -237,80 +241,84 @@
             </div>
           </div>
         </div> -->
-      </div>
+        </div>
 
-      <!-- Main content -->
-      <div class="flex-1 flex flex-col min-w-0 lg:ml-64">
-        <!-- Top header -->
-        <header
-          class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40"
-          style="padding: 0 1rem"
-        >
-          <div class="px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-              <div class="flex items-center gap-4">
-                <button
-                  @click="sidebarOpen = true"
-                  class="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors"
-                >
-                  <span class="sr-only">Open sidebar</span>
-                  <svg
-                    class="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col min-w-0 lg:ml-64">
+          <!-- Top header -->
+          <header
+            class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40"
+            style="padding: 0 1rem"
+          >
+            <div class="px-4 sm:px-6 lg:px-8">
+              <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-4">
+                  <button
+                    @click="sidebarOpen = true"
+                    class="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                </button>
-                <h1 class="ml-4 text-2xl font-bold text-gray-900 lg:ml-0">
-                  {{ pageTitle }}
-                </h1>
-              </div>
-
-              <div class="flex items-center space-x-4">
-                <!-- Profile menu -->
-                <div class="relative">
-                  <router-link
-                    to="/profile"
-                    class="flex items-center p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
-                  >
-                    <span class="sr-only">User profile</span>
-                    <div
-                      class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center"
+                    <span class="sr-only">Open sidebar</span>
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      <span class="text-white font-medium text-sm">U</span>
-                    </div>
-                  </router-link>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
+                  <h1 class="ml-4 text-2xl font-bold text-gray-900 lg:ml-0">
+                    {{ pageTitle }}
+                  </h1>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                  <!-- Profile menu -->
+                  <div class="relative">
+                    <router-link
+                      to="/profile"
+                      class="flex items-center p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                    >
+                      <span class="sr-only">User profile</span>
+                      <div
+                        class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center"
+                      >
+                        <span class="text-white font-medium text-sm">U</span>
+                      </div>
+                    </router-link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <!-- Main content area -->
-        <main class="flex-1 overflow-y-auto">
-          <div class="p-4 sm:p-6 lg:p-8">
-            <router-view />
-          </div>
-        </main>
+          <!-- Main content area -->
+          <main class="flex-1 overflow-y-auto">
+            <div class="p-4 sm:p-6 lg:p-8">
+              <router-view />
+            </div>
+          </main>
+        </div>
       </div>
     </div>
-    </div>
   </div>
+  <!-- Global snackbar -->
+  <AppSnackbar />
 </template>
 
 <script>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import AppSnackbar from "./components/AppSnackbar.vue";
 
 export default {
   name: "App",
+  components: { AppSnackbar },
   setup() {
     const route = useRoute();
     const sidebarOpen = ref(false);

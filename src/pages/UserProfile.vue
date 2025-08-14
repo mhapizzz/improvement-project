@@ -201,6 +201,7 @@
 </template>
 
 <script>
+import { showSuccess, showError } from '../composables/useSnackbar'
 export default {
   name: 'UserProfile',
   data() {
@@ -262,12 +263,10 @@ export default {
       }, 500);
     },
     showSuccessMessage(message) {
-      // You can integrate with a toast notification library
-      alert(message);
+      showSuccess(message)
     },
     showErrorMessage(message) {
-      // You can integrate with a toast notification library
-      alert(message);
+      showError(message)
     }
   }
 };

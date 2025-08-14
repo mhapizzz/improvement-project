@@ -30,7 +30,7 @@
         </div>
 
         <!-- Date Range Filter -->
-        <div class="flex-1">
+        <!-- <div class="flex-1">
           <label class="block text-sm font-medium text-gray-700 mb-2"
             >Date Range</label
           >
@@ -39,7 +39,7 @@
             type="date"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
-        </div>
+        </div> -->
 
         <!-- Search -->
         <div class="flex-1">
@@ -49,7 +49,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search by part number, description..."
+            placeholder="Search by reservation number, PO number, SPB number..."
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -180,9 +180,10 @@
     >
       <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-semibold text-gray-900">Stock Transactions</h3>
-        <p class="text-sm text-gray-600 mt-1">
-          {{ filteredTransactions.length }} transactions found
+        <p v-if="!isLoading" class="text-sm text-gray-600 mt-1">
+          {{ total }} transactions found
         </p>
+        <div v-else class="mt-2 h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
       </div>
 
       <div class="overflow-x-auto">
@@ -197,7 +198,7 @@
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Document No.
+                Document Numbers
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -207,22 +208,22 @@
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Part Number
+                Site
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Description
+                Plant
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Quantity
+                Recipient/Sender
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Status
+                Created Date
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -231,7 +232,7 @@
               </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody v-if="!isLoading" class="bg-white divide-y divide-gray-200">
             <tr
               v-for="transaction in paginatedTransactions"
               :key="transaction.id"
@@ -273,10 +274,15 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">
-                  {{ transaction.documentNo }}
-                </div>
-                <div class="text-sm text-gray-500">
-                  {{ transaction.referenceNo }}
+                  <div v-if="transaction.reservation_number">
+                    <span class="font-semibold">Reservation:</span> {{ transaction.reservation_number }}
+                  </div>
+                  <div v-if="transaction.po_number">
+                    <span class="font-semibold">PO:</span> {{ transaction.po_number }}
+                  </div>
+                  <div v-if="transaction.spb_number">
+                    <span class="font-semibold">SPB:</span> {{ transaction.spb_number }}
+                  </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -285,55 +291,82 @@
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm font-medium text-gray-900">
-                  {{ transaction.partNumber }}
-                </div>
-                <div class="text-sm text-gray-500">
-                  {{ transaction.stockCode }}
-                </div>
-              </td>
-              <td class="px-6 py-4">
                 <div class="text-sm text-gray-900">
-                  {{ transaction.description }}
+                  {{ transaction.site }}
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <span
-                    :class="
-                      transaction.type === 'in'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    "
-                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                  >
-                    {{ transaction.type === "in" ? "+" : "-"
-                    }}{{ transaction.quantity }}
+                <div class="text-sm text-gray-900">
+                  {{ transaction.plant }}
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">
+                  <span v-if="transaction.recipient" class="text-red-600">
+                    To: {{ transaction.recipient }}
                   </span>
+                  <span v-else-if="transaction.sender" class="text-green-600">
+                    From: {{ transaction.sender }}
+                  </span>
+                  <span v-else class="text-gray-500">-</span>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  :class="getStatusColor(transaction.status)"
-                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                >
-                  {{ transaction.status }}
-                </span>
+                <div class="text-sm text-gray-900">
+                  {{ formatDate(transaction.created_at) }}
+                </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button
+                  @click="openDetailModal(transaction.id)"
+                  class="text-green-600 hover:text-green-900 mr-3"
+                >
+                  Detail
+                </button>
+                <!-- <button
                   @click="viewTransaction(transaction)"
                   class="text-blue-600 hover:text-blue-900 mr-3"
                 >
                   View
-                </button>
+                </button> -->
                 <button
                   @click="editTransaction(transaction)"
                   class="text-indigo-600 hover:text-indigo-900"
-                  v-if="transaction.status === 'Draft'"
                 >
                   Edit
                 </button>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else class="bg-white divide-y divide-gray-200">
+            <!-- Skeleton Loading Rows -->
+            <tr v-for="n in 5" :key="n" class="animate-pulse">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="h-4 bg-gray-200 rounded w-16"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="h-4 bg-gray-200 rounded w-20"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="h-4 bg-gray-200 rounded w-24"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="h-4 bg-gray-200 rounded w-32"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="h-4 bg-gray-200 rounded w-28"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="h-4 bg-gray-200 rounded w-24"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="h-4 bg-gray-200 rounded w-20"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex space-x-2">
+                  <div class="h-8 bg-gray-200 rounded w-16"></div>
+                  <div class="h-8 bg-gray-200 rounded w-16"></div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -344,7 +377,7 @@
     <!-- Pagination -->
     <Pagination
       :current-page="currentPage"
-      :total-items="filteredTransactions.length"
+      :total-items="total"
       :items-per-page="itemsPerPage"
       @page-change="handlePageChange"
     />
@@ -353,268 +386,263 @@
     <StockModal
       :isOpen="isModalOpen"
       :type="modalType"
+      :isEditing="!!selectedTransactionForEdit"
+      :transactionData="selectedTransactionForEdit"
       @close="closeModal"
       @submit="handleTransactionSubmit"
+    />
+
+    <!-- Stock Detail Modal -->
+    <StockDetailModal
+      :isOpen="isDetailModalOpen"
+      :transactionId="selectedTransactionId"
+      @close="closeDetailModal"
     />
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import StockModal from "../../components/StockModal.vue";
-import Pagination from "../../components/Pagination.vue";
+import StockDetailModal from "../../components/StockDetailModal.vue";
+import { getStockList, getStockTransactionDetail } from "../../services/stockService";
+import { showSuccess, showError } from "../../composables/useSnackbar";
+import Pagination from "../../components/Pagination.vue"; // Added Pagination import
 
-export default {
-  name: "StockList",
-  components: {
-    StockModal,
-    Pagination,
-  },
-  data() {
-    return {
-      selectedFilter: "all",
-      dateFilter: "",
-      searchQuery: "",
-      currentPage: 1,
-      itemsPerPage: 10,
-      isModalOpen: false,
-      modalType: "in",
-      stockTransactions: [
-        {
-          id: 1,
-          type: "in",
-          documentNo: "1100086756",
-          referenceNo: "025/DO/HRS-AGM/VI/2025",
-          date: "2025-05-10",
-          partNumber: "23236859",
-          stockCode: "SP00606599",
-          description: "FRONT SPRING FMX400 NO.1",
-          quantity: 3,
-          status: "Completed",
-          site: "AGM Blok 4",
-          plant: "HRS Site AGM Blok 4",
-        },
-        {
-          id: 2,
-          type: "out",
-          documentNo: "423059",
-          referenceNo: "RESV-2025-001",
-          date: "2025-05-10",
-          partNumber: "23236859",
-          stockCode: "SP00606599",
-          description: "FRONT SPRING FMX400 NO.1",
-          quantity: 1,
-          status: "Completed",
-          site: "AGM Blok 4",
-          plant: "HRS Site AGM Blok 4",
-          recipient: "Izul",
-        },
-        {
-          id: 3,
-          type: "in",
-          documentNo: "1100086757",
-          referenceNo: "026/DO/HRS-AGM/VI/2025",
-          date: "2025-05-11",
-          partNumber: "45678901",
-          stockCode: "SP00606600",
-          description: "BRAKE PAD SET FRONT",
-          quantity: 5,
-          status: "Draft",
-          site: "AGM Blok 4",
-          plant: "HRS Site AGM Blok 4",
-        },
-        {
-          id: 4,
-          type: "out",
-          documentNo: "423060",
-          referenceNo: "RESV-2025-002",
-          date: "2025-05-11",
-          partNumber: "78901234",
-          stockCode: "SP00606601",
-          description: "ENGINE OIL FILTER",
-          quantity: 2,
-          status: "Processing",
-          site: "AGM Blok 4",
-          plant: "HRS Site AGM Blok 4",
-          recipient: "Ahmad",
-        },
-        {
-          id: 5,
-          type: "in",
-          documentNo: "1100086758",
-          referenceNo: "027/DO/HRS-AGM/VI/2025",
-          date: "2025-05-12",
-          partNumber: "34567890",
-          stockCode: "SP00606602",
-          description: "TRANSMISSION FLUID",
-          quantity: 10,
-          status: "Completed",
-          site: "AGM Blok 4",
-          plant: "HRS Site AGM Blok 4",
-        },
-      ],
-    };
-  },
-  computed: {
-    filteredTransactions() {
-      let filtered = this.stockTransactions;
+// Router
+const router = useRouter();
 
-      // Filter by type
-      if (this.selectedFilter !== "all") {
-        filtered = filtered.filter(
-          (transaction) => transaction.type === this.selectedFilter
-        );
-      }
+// State
+const selectedFilter = ref("all");
+const dateFilter = ref("");
+const searchQuery = ref("");
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+const isModalOpen = ref(false);
+const modalType = ref("in");
+const stockTransactions = ref([]);
+const isLoading = ref(false);
+const loadError = ref(null);
+const total = ref(0);
+const pageFrom = ref(0);
+const pageTo = ref(0);
+const lastPage = ref(1);
 
-      // Filter by date
-      if (this.dateFilter) {
-        filtered = filtered.filter(
-          (transaction) => transaction.date === this.dateFilter
-        );
-      }
+// Detail Modal State
+const isDetailModalOpen = ref(false);
+const selectedTransactionId = ref(null);
 
-      // Filter by search query
-      if (this.searchQuery) {
-        const query = this.searchQuery.toLowerCase();
-        filtered = filtered.filter(
-          (transaction) =>
-            transaction.partNumber.toLowerCase().includes(query) ||
-            transaction.description.toLowerCase().includes(query) ||
-            transaction.stockCode.toLowerCase().includes(query) ||
-            transaction.documentNo.toLowerCase().includes(query)
-        );
-      }
+// Edit Modal State
+const selectedTransactionForEdit = ref(null);
 
-      return filtered;
-    },
-    stockInCount() {
-      return this.stockTransactions.filter((t) => t.type === "in").length;
-    },
-    stockOutCount() {
-      return this.stockTransactions.filter((t) => t.type === "out").length;
-    },
-    totalItems() {
-      return this.stockTransactions.length;
-    },
+// Computed properties
+const filteredTransactions = computed(() => {
+  let filtered = stockTransactions.value;
 
-    paginatedTransactions() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.filteredTransactions.slice(start, end);
-    },
-  },
-  methods: {
-    filterTransactions() {
-      this.currentPage = 1; // Reset to first page when filtering
-    },
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-    },
-    getStatusColor(status) {
-      const colors = {
-        Draft: "bg-gray-100 text-gray-800",
-        Processing: "bg-yellow-100 text-yellow-800",
-        Completed: "bg-green-100 text-green-800",
-        Cancelled: "bg-red-100 text-red-800",
-      };
-      return colors[status] || "bg-gray-100 text-gray-800";
-    },
-    viewTransaction(transaction) {
-      if (transaction.type === "in") {
-        this.$router.push(`/stock/in/${transaction.id}`);
-      } else {
-        this.$router.push(`/stock/out/${transaction.id}`);
-      }
-    },
-    editTransaction(transaction) {
-      if (transaction.type === "in") {
-        this.$router.push(`/stock/in/${transaction.id}/edit`);
-      } else {
-        this.$router.push(`/stock/out/${transaction.id}/edit`);
-      }
-    },
-    handlePageChange(newPage) {
-      this.currentPage = newPage;
-    },
-    openStockModal(type) {
-      this.modalType = type;
-      this.isModalOpen = true;
-    },
-    closeModal() {
-      this.isModalOpen = false;
-    },
-    handleTransactionSubmit(transactionData) {
-      // Generate a unique ID for the new transaction
-      const newId = Math.max(...this.stockTransactions.map((t) => t.id)) + 1;
+  // Filter by type
+  if (selectedFilter.value !== "all") {
+    filtered = filtered.filter(
+      (transaction) => transaction.type === selectedFilter.value
+    );
+  }
 
-      // Generate document number based on type
-      const documentNo = this.generateDocumentNumber(transactionData.type);
+  // Filter by date
+  if (dateFilter.value) {
+    filtered = filtered.filter(
+      (transaction) => transaction.date === dateFilter.value
+    );
+  }
 
-      // Create the new transaction with proper structure
-      const newTransaction = {
-        id: newId,
-        type: transactionData.type,
-        documentNo: documentNo,
-        referenceNo: transactionData.spbNumber,
-        date: transactionData.date,
-        site: transactionData.site,
-        plant: transactionData.plant,
-        status: "Draft",
-        createdAt: transactionData.createdAt,
-        poNumber: transactionData.poNumber,
-        spbNumber: transactionData.spbNumber,
-      };
+  // Filter by search query
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    filtered = filtered.filter(
+      (transaction) =>
+        (transaction.reservation_number && transaction.reservation_number.toLowerCase().includes(query)) ||
+        (transaction.po_number && transaction.po_number.toLowerCase().includes(query)) ||
+        (transaction.spb_number && transaction.spb_number.toLowerCase().includes(query)) ||
+        (transaction.site && transaction.site.toLowerCase().includes(query)) ||
+        (transaction.plant && transaction.plant.toLowerCase().includes(query))
+    );
+  }
 
-      // Add recipient for stock out
-      if (transactionData.type === "out") {
-        newTransaction.recipient = transactionData.recipient;
-      }
+  return filtered;
+});
 
-      // For simplicity, if there are multiple items, we'll create separate transactions
-      // In a real application, you might want to handle this differently
-      transactionData.items.forEach((item, index) => {
-        const itemTransaction = {
-          ...newTransaction,
-          id: newId + index,
-          partNumber: item.partNumber,
-          stockCode: item.stockCode,
-          description: item.description,
-          quantity: item.quantity,
-        };
+const stockInCount = computed(() => {
+  return stockTransactions.value.filter((t) => t.type === "in").length;
+});
 
-        this.stockTransactions.unshift(itemTransaction);
-      });
+const stockOutCount = computed(() => {
+  return stockTransactions.value.filter((t) => t.type === "out").length;
+});
 
-      // Show success message
-      alert(
-        `${
-          transactionData.type === "in" ? "Stock IN" : "Stock OUT"
-        } transaction created successfully!`
-      );
+const totalItems = computed(() => {
+  return stockTransactions.value.length;
+});
 
-      // Reset current page to show the new transaction
-      this.currentPage = 1;
-    },
-    generateDocumentNumber(type) {
-      // Generate a simple document number based on type
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      const random = Math.floor(Math.random() * 10000);
+const totalPages = computed(() => lastPage.value || 1);
 
-      if (type === "in") {
-        return `11000${random}`;
-      } else {
-        return `4230${random}`;
-      }
-    },
-  },
+const paginatedTransactions = computed(() => filteredTransactions.value);
+
+// Methods
+const fetchStockTransactions = async () => {
+  isLoading.value = true;
+  loadError.value = null;
+  try {
+    const response = await getStockList(
+      currentPage.value,
+      searchQuery.value,
+      "", // sortBy - can be added later
+      ""  // sortOrder - can be added later
+    );
+    
+    const payload = response?.data || {};
+    const list = Array.isArray(payload.data) ? payload.data : [];
+    
+    // Normalize keys to match the API response
+    stockTransactions.value = list.map((raw) => ({
+      id: raw.id || raw._id,
+      _id: raw._id || raw.id, // Ensure _id is available for updates
+      reservation_number: raw.reservation_number,
+      po_number: raw.po_number,
+      spb_number: raw.spb_number,
+      type: raw.type,
+      date: raw.date,
+      site: raw.site,
+      plant: raw.plant,
+      recipient: raw.recipient,
+      sender: raw.sender,
+      created_at: raw.created_at,
+      updated_at: raw.updated_at,
+    }));
+    
+    total.value = Number(payload.total || stockTransactions.value.length);
+    pageFrom.value = Number(payload.from || 0);
+    pageTo.value = Number(payload.to || stockTransactions.value.length);
+    lastPage.value = Number(payload.last_page || 1);
+  } catch (error) {
+    console.error(error);
+    loadError.value = "Failed to load stock transactions.";
+    showError("Failed to load stock transactions.");
+  } finally {
+    isLoading.value = false;
+  }
 };
+
+const filterTransactions = () => {
+  currentPage.value = 1; // Reset to first page when filtering
+  fetchStockTransactions();
+};
+
+const formatDate = (dateString) => {
+  if (!dateString) return "-";
+  let parsed = dateString;
+  // Handle common backend format "YYYY-MM-DD HH:mm:ss" which Safari won't parse
+  if (
+    typeof parsed === "string" &&
+    /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/.test(parsed)
+  ) {
+    parsed = parsed.replace(" ", "T");
+  }
+  const date = new Date(parsed);
+  if (isNaN(date.getTime())) return String(dateString);
+  return date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
+
+const viewTransaction = (transaction) => {
+  if (transaction.type === "in") {
+    router.push(`/stock/in/${transaction.id}`);
+  } else {
+    router.push(`/stock/out/${transaction.id}`);
+  }
+};
+
+const editTransaction = async (transaction) => {
+  try {
+    // Fetch full transaction details including items for editing
+    const response = await getStockTransactionDetail(transaction.id);
+    const fullTransaction = response?.data || transaction;
+    
+    // Set modal to edit mode and populate with transaction data
+    modalType.value = transaction.type;
+    isModalOpen.value = true;
+    // Pass full transaction data to modal for editing
+    selectedTransactionForEdit.value = fullTransaction;
+  } catch (error) {
+    console.error('Failed to fetch transaction details:', error);
+    showError('Failed to load transaction details for editing');
+  }
+};
+
+const handlePageChange = async (newPage) => {
+  currentPage.value = newPage;
+  await fetchStockTransactions();
+};
+
+const openStockModal = (type) => {
+  modalType.value = type;
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  selectedTransactionForEdit.value = null;
+};
+
+const openDetailModal = (transactionId) => {
+  console.log('Opening detail modal for transaction:', transactionId);
+  selectedTransactionId.value = transactionId;
+  isDetailModalOpen.value = true;
+  console.log('Modal state:', { isDetailModalOpen: isDetailModalOpen.value, selectedTransactionId: selectedTransactionId.value });
+};
+
+const closeDetailModal = () => {
+  isDetailModalOpen.value = false;
+  selectedTransactionId.value = null;
+};
+
+const handleTransactionSubmit = async (transactionData) => {
+  try {
+    // The modal has already called the API, so we just need to refresh the list
+    await fetchStockTransactions()
+    
+    // Reset current page to show the new/updated transaction
+    currentPage.value = 1
+    
+    // Close modal
+    closeModal()
+    
+    // Show appropriate success message
+    if (selectedTransactionForEdit.value) {
+      showSuccess('Transaction updated successfully!')
+    } else {
+      showSuccess('Transaction created successfully!')
+    }
+  } catch (error) {
+    console.error('Failed to refresh transactions:', error)
+    showError('Transaction saved but failed to refresh the list.')
+  }
+}
+
+// Watchers
+watch(searchQuery, () => {
+  currentPage.value = 1;
+  fetchStockTransactions();
+});
+
+watch(selectedFilter, () => {
+  currentPage.value = 1;
+  fetchStockTransactions();
+});
+
+// Lifecycle
+onMounted(fetchStockTransactions);
 </script>
 
 <style scoped>

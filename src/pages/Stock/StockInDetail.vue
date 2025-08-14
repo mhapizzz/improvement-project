@@ -149,6 +149,7 @@
 </template>
 
 <script>
+import { showInfo } from '../../composables/useSnackbar'
 export default {
   name: "StockIn",
   data() {
@@ -171,7 +172,7 @@ export default {
   methods: {
     scanBarcode() {
       // Enhanced barcode scanning functionality
-      alert("Scanning barcode...");
+      showInfo("Scanning barcode...");
     },
     addMaterial() {
       this.stockItems.push({

@@ -4,9 +4,9 @@
     <div
       class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white"
     >
-      <h2 class="text-2xl font-bold mb-2">Stock Management</h2>
+      <h2 class="text-2xl font-bold mb-2">Manajemen Stok</h2>
       <p class="text-blue-100">
-        Track all incoming and outgoing inventory transactions
+        Lacak semua transaksi inventaris masuk dan keluar
       </p>
     </div>
 
@@ -16,23 +16,23 @@
         <!-- Transaction Type Filter -->
         <div class="flex-1">
           <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Transaction Type</label
+            >Jenis Transaksi</label
           >
           <select
             v-model="selectedFilter"
             @change="filterTransactions"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
-            <option value="all">All Transactions</option>
-            <option value="in">Stock IN</option>
-            <option value="out">Stock OUT</option>
+            <option value="all">Semua Transaksi</option>
+            <option value="in">Stok Masuk</option>
+            <option value="out">Stok Keluar</option>
           </select>
         </div>
 
         <!-- Date Range Filter -->
         <!-- <div class="flex-1">
           <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Date Range</label
+            >Rentang Tanggal</label
           >
           <input
             v-model="dateFilter"
@@ -44,12 +44,12 @@
         <!-- Search -->
         <div class="flex-1">
           <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Search</label
+            >Cari</label
           >
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search by reservation number, PO number, SPB number..."
+            placeholder="Cari berdasarkan nomor reservasi, nomor PO, nomor SPB..."
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -76,7 +76,7 @@
             </svg>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Stock IN</p>
+            <p class="text-sm font-medium text-gray-600">Stok Masuk</p>
             <p class="text-2xl font-bold text-green-600">{{ stockInCount }}</p>
           </div>
         </div>
@@ -100,7 +100,7 @@
             </svg>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Stock OUT</p>
+            <p class="text-sm font-medium text-gray-600">Stok Keluar</p>
             <p class="text-2xl font-bold text-red-600">{{ stockOutCount }}</p>
           </div>
         </div>
@@ -124,7 +124,7 @@
             </svg>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Total Items</p>
+            <p class="text-sm font-medium text-gray-600">Total Barang</p>
             <p class="text-2xl font-bold text-blue-600">{{ totalItems }}</p>
           </div>
         </div>
@@ -150,7 +150,7 @@
             d="M12 6v6m0 0v6m0-6h6m-6 0H6"
           />
         </svg>
-        New Stock IN
+        Stok Masuk Baru
       </button>
 
       <button
@@ -170,7 +170,7 @@
             d="M12 6v6m0 0v6m0-6h6m-6 0H6"
           />
         </svg>
-        New Stock OUT
+        Stok Keluar Baru
       </button>
     </div>
 
@@ -179,9 +179,9 @@
       class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
     >
       <div class="px-6 py-4 border-b border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900">Stock Transactions</h3>
+        <h3 class="text-lg font-semibold text-gray-900">Transaksi Stok</h3>
         <p v-if="!isLoading" class="text-sm text-gray-600 mt-1">
-          {{ total }} transactions found
+          {{ total }} transaksi ditemukan
         </p>
         <div v-else class="mt-2 h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
       </div>
@@ -193,42 +193,42 @@
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Type
+                Jenis
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Document Numbers
+                Nomor Dokumen
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Date
+                Tanggal
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Site
+                Situs
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Plant
+                Pabrik
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Recipient/Sender
+                Penerima/Pengirim
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Created Date
+                Tanggal Dibuat
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Actions
+                Aksi
               </th>
             </tr>
           </thead>
@@ -269,13 +269,13 @@
                       "
                     />
                   </svg>
-                  {{ transaction.type === "in" ? "IN" : "OUT" }}
+                  {{ transaction.type === "in" ? "MASUK" : "KELUAR" }}
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">
                   <div v-if="transaction.reservation_number">
-                    <span class="font-semibold">Reservation:</span> {{ transaction.reservation_number }}
+                    <span class="font-semibold">Reservasi:</span> {{ transaction.reservation_number }}
                   </div>
                   <div v-if="transaction.po_number">
                     <span class="font-semibold">PO:</span> {{ transaction.po_number }}
@@ -303,10 +303,10 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
                   <span v-if="transaction.recipient" class="text-red-600">
-                    To: {{ transaction.recipient }}
+                    Kepada: {{ transaction.recipient }}
                   </span>
                   <span v-else-if="transaction.sender" class="text-green-600">
-                    From: {{ transaction.sender }}
+                    Dari: {{ transaction.sender }}
                   </span>
                   <span v-else class="text-gray-500">-</span>
                 </div>
@@ -327,7 +327,7 @@
                   @click="viewTransaction(transaction)"
                   class="text-blue-600 hover:text-blue-900 mr-3"
                 >
-                  View
+                  Lihat
                 </button> -->
                 <button
                   @click="editTransaction(transaction)"
@@ -524,8 +524,8 @@ const fetchStockTransactions = async () => {
     lastPage.value = Number(payload.last_page || 1);
   } catch (error) {
     console.error(error);
-    loadError.value = "Failed to load stock transactions.";
-    showError("Failed to load stock transactions.");
+    loadError.value = "Gagal memuat transaksi stok.";
+    showError("Gagal memuat transaksi stok.");
   } finally {
     isLoading.value = false;
   }
@@ -576,7 +576,7 @@ const editTransaction = async (transaction) => {
     selectedTransactionForEdit.value = fullTransaction;
   } catch (error) {
     console.error('Failed to fetch transaction details:', error);
-    showError('Failed to load transaction details for editing');
+    showError('Gagal memuat detail transaksi untuk diedit');
   }
 };
 
@@ -620,13 +620,13 @@ const handleTransactionSubmit = async (transactionData) => {
     
     // Show appropriate success message
     if (selectedTransactionForEdit.value) {
-      showSuccess('Transaction updated successfully!')
+      showSuccess('Transaksi berhasil diperbarui!')
     } else {
-      showSuccess('Transaction created successfully!')
+      showSuccess('Transaksi berhasil dibuat!')
     }
   } catch (error) {
     console.error('Failed to refresh transactions:', error)
-    showError('Transaction saved but failed to refresh the list.')
+    showError('Transaksi tersimpan tetapi gagal memperbarui daftar.')
   }
 }
 

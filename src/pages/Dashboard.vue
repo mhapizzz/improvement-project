@@ -4,9 +4,9 @@
     <div
       class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white"
     >
-      <h2 class="text-2xl font-bold mb-2">Welcome back!</h2>
+      <h2 class="text-2xl font-bold mb-2">Selamat datang kembali!</h2>
       <p class="text-indigo-100">
-        Here's what's happening with your inventory today.
+        Berikut adalah yang terjadi dengan inventaris Anda hari ini.
       </p>
     </div>
 
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Total Stock</p>
+            <p class="text-sm font-medium text-gray-600">Total Stok</p>
             <p class="text-2xl font-bold text-gray-900">1,234</p>
           </div>
         </div>
@@ -46,7 +46,7 @@
           >
             +12%
           </span>
-          <span class="text-gray-500 text-sm ml-2">from last month</span>
+          <span class="text-gray-500 text-sm ml-2">dari bulan lalu</span>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
             </div>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Stock In</p>
+            <p class="text-sm font-medium text-gray-600">Stok Masuk</p>
             <p class="text-2xl font-bold text-gray-900">89</p>
           </div>
         </div>
@@ -84,7 +84,7 @@
           >
             +8%
           </span>
-          <span class="text-gray-500 text-sm ml-2">from last week</span>
+          <span class="text-gray-500 text-sm ml-2">dari minggu lalu</span>
         </div>
       </div>
 
@@ -112,7 +112,7 @@
             </div>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Stock Out</p>
+            <p class="text-sm font-medium text-gray-600">Stok Keluar</p>
             <p class="text-2xl font-bold text-gray-900">67</p>
           </div>
         </div>
@@ -122,7 +122,7 @@
           >
             -3%
           </span>
-          <span class="text-gray-500 text-sm ml-2">from last week</span>
+          <span class="text-gray-500 text-sm ml-2">dari minggu lalu</span>
         </div>
       </div>
 
@@ -150,7 +150,7 @@
             </div>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Pending</p>
+            <p class="text-sm font-medium text-gray-600">Tertunda</p>
             <p class="text-2xl font-bold text-gray-900">23</p>
           </div>
         </div>
@@ -160,7 +160,7 @@
           >
             +5%
           </span>
-          <span class="text-gray-500 text-sm ml-2">from yesterday</span>
+          <span class="text-gray-500 text-sm ml-2">dari kemarin</span>
         </div>
       </div>
     </div>
@@ -171,7 +171,7 @@
       <div class="lg:col-span-2">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-6">
-            Quick Actions
+            Aksi Cepat
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <router-link
@@ -199,9 +199,9 @@
                 <h4
                   class="font-semibold text-gray-900 group-hover:text-green-700"
                 >
-                  Stock In
+                  Stok Masuk
                 </h4>
-                <p class="text-sm text-gray-600">Add new inventory</p>
+                <p class="text-sm text-gray-600">Tambah inventaris baru</p>
               </div>
             </router-link>
 
@@ -230,9 +230,40 @@
                 <h4
                   class="font-semibold text-gray-900 group-hover:text-red-700"
                 >
-                  Stock Out
+                  Stok Keluar
                 </h4>
-                <p class="text-sm text-gray-600">Remove inventory</p>
+                <p class="text-sm text-gray-600">Kurangi inventaris</p>
+              </div>
+            </router-link>
+
+            <router-link
+              to="/soh"
+              class="group flex items-center p-4 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-all duration-200"
+            >
+              <div
+                class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4 group-hover:bg-blue-200 transition-colors"
+              >
+                <svg
+                  class="w-6 h-6 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4
+                  class="font-semibold text-gray-900 group-hover:text-blue-700"
+                >
+                  Stok Tersedia
+                </h4>
+                <p class="text-sm text-gray-600">Lihat inventaris saat ini</p>
               </div>
             </router-link>
 
@@ -243,8 +274,8 @@
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold text-gray-900 group-hover:text-indigo-700">Reports</h4>
-                <p class="text-sm text-gray-600">View analytics</p>
+                <h4 class="font-semibold text-gray-900 group-hover:text-indigo-700">Laporan</h4>
+                <p class="text-sm text-gray-600">Lihat analitik</p>
               </div>
             </button>
 
@@ -256,8 +287,8 @@
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold text-gray-900 group-hover:text-purple-700">Settings</h4>
-                <p class="text-sm text-gray-600">Configure system</p>
+                <h4 class="font-semibold text-gray-900 group-hover:text-purple-700">Pengaturan</h4>
+                <p class="text-sm text-gray-600">Konfigurasi sistem</p>
               </div>
             </button> -->
           </div>
@@ -267,7 +298,7 @@
       <!-- Recent Activity -->
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-6">
-          Recent Activity
+          Aktivitas Terbaru
         </h3>
         <div class="space-y-4">
           <div class="flex items-start space-x-3">
@@ -275,9 +306,9 @@
               class="w-3 h-3 bg-green-500 rounded-full mt-1.5 flex-shrink-0"
             ></div>
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-gray-900">Stock In: Laptop</p>
+              <p class="text-sm font-medium text-gray-900">Stok Masuk: Laptop</p>
               <p class="text-xs text-gray-500 mt-1">
-                Added 5 units • 2 hours ago
+                Ditambahkan 5 unit • 2 jam yang lalu
               </p>
             </div>
           </div>
@@ -286,9 +317,9 @@
               class="w-3 h-3 bg-red-500 rounded-full mt-1.5 flex-shrink-0"
             ></div>
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-gray-900">Stock Out: Mouse</p>
+              <p class="text-sm font-medium text-gray-900">Stok Keluar: Mouse</p>
               <p class="text-xs text-gray-500 mt-1">
-                Removed 3 units • 4 hours ago
+                Dihapus 3 unit • 4 jam yang lalu
               </p>
             </div>
           </div>
@@ -298,10 +329,10 @@
             ></div>
             <div class="flex-1 min-w-0">
               <p class="text-sm font-medium text-gray-900">
-                New Product: Keyboard
+                Produk Baru: Keyboard
               </p>
               <p class="text-xs text-gray-500 mt-1">
-                Added to inventory • 6 hours ago
+                Ditambahkan ke inventaris • 6 jam yang lalu
               </p>
             </div>
           </div>
@@ -310,9 +341,9 @@
               class="w-3 h-3 bg-yellow-500 rounded-full mt-1.5 flex-shrink-0"
             ></div>
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-gray-900">Low Stock Alert</p>
+              <p class="text-sm font-medium text-gray-900">Peringatan Stok Menipis</p>
               <p class="text-xs text-gray-500 mt-1">
-                Monitor stock level • 8 hours ago
+                Pantau tingkat stok • 8 jam yang lalu
               </p>
             </div>
           </div>
@@ -320,7 +351,7 @@
         <button
           class="w-full mt-6 text-sm text-indigo-600 hover:text-indigo-800 font-medium py-2 px-4 border border-transparent rounded-md hover:bg-indigo-50 transition-colors"
         >
-          View all activity
+          Lihat semua aktivitas
         </button>
       </div>
     </div>

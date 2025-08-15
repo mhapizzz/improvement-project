@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import StockInDetail from "../pages/Stock/StockInDetail.vue";
 import StockOutDetail from "../pages/Stock/StockOutDetail.vue";
+import StockOnHand from "../pages/StockOnHand/StockOnHandList.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import StockList from "../pages/Stock/StockList.vue";
 import ItemList from "../pages/Item/ItemList.vue";
@@ -16,10 +17,11 @@ const router = createRouter({
     { path: "/stock", component: StockList },
     { path: "/stock/in", component: StockInDetail },
     { path: "/stock/out", component: StockOutDetail },
+    { path: "/soh", component: StockOnHand },
     { path: "/items", component: ItemList },
     { path: "/profile", component: UserProfile },
     { path: "/users", component: UserList },
-    
+
     { path: "/login", component: Login },
     { path: "/register", component: Register },
   ],

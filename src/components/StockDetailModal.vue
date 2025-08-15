@@ -183,7 +183,7 @@
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Part Number</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                    <!-- <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th> -->
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -201,9 +201,9 @@
                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
                       <span class="font-medium">{{ item.qty }}</span>
                     </td>
-                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                    <!-- <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
                       {{ item.item?.price ? `$${item.item.price}` : 'N/A' }}
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>

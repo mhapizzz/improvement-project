@@ -38,7 +38,7 @@
               @click="sidebarOpen = false"
               class="absolute top-2 right-2 lg:hidden p-2 rounded-md text-white hover:bg-white hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-colors"
             >
-              <span class="sr-only">Close sidebar</span>
+              <span class="sr-only">Tutup sidebar</span>
               <svg
                 class="h-6 w-6"
                 fill="none"
@@ -118,7 +118,7 @@
                   d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
                 />
               </svg>
-              Items
+              Item
             </router-link>
 
             <router-link
@@ -144,7 +144,32 @@
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                 />
               </svg>
-              Stock List
+              List Transaksi
+            </router-link>
+
+            <router-link
+              to="/soh"
+              class="flex items-center gap-4 h-12 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-green-50 hover:text-green-700"
+              :class="{
+                'bg-green-100 text-green-700 shadow-sm': $route.path === '/soh',
+              }"
+              style="padding: 0 1rem"
+              @click="closeSidebarOnMobile"
+            >
+              <svg
+                class="h-5 w-5 text-green-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
+              </svg>
+              Stock On Hand
             </router-link>
 
             <!-- <router-link
@@ -326,10 +351,11 @@ export default {
     const pageTitle = computed(() => {
       const routeToTitle = {
         "/": "Dashboard",
-        "/stock": "Stock List",
+        "/stock": "List Transaksi",
         "/stock/in": "Stock In",
         "/stock/out": "Stock Out",
-        "/items": "Items",
+        "/soh": "Stock On Hand",
+        "/items": "Item",
         "/profile": "User Profile",
         "/users": "User Management",
       };

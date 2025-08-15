@@ -4,8 +4,8 @@
     <div
       class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white"
     >
-      <h2 class="text-2xl font-bold mb-2">Item Management</h2>
-      <p class="text-blue-100">Manage your inventory items and their details</p>
+      <h2 class="text-2xl font-bold mb-2">Manajemen Barang</h2>
+      <p class="text-blue-100">Kelola barang inventaris dan detailnya</p>
     </div>
 
     <!-- Search Section -->
@@ -14,12 +14,12 @@
         <!-- Search -->
         <div class="flex-1">
           <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Search</label
+            >Cari</label
           >
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search by stock code, part number, or description..."
+            placeholder="Cari berdasarkan kode stok, nomor bagian, atau deskripsi..."
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -46,7 +46,7 @@
             </svg>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Total Items</p>
+            <p class="text-sm font-medium text-gray-600">Total Barang</p>
             <p class="text-2xl font-bold text-blue-600">{{ totalItems }}</p>
           </div>
         </div>
@@ -70,7 +70,7 @@
             </svg>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Active Items</p>
+            <p class="text-sm font-medium text-gray-600">Barang Aktif</p>
             <p class="text-2xl font-bold text-green-600">{{ activeItems }}</p>
           </div>
         </div>
@@ -94,7 +94,7 @@
             </svg>
           </div>
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-600">Categories</p>
+            <p class="text-sm font-medium text-gray-600">Kategori</p>
             <p class="text-2xl font-bold text-purple-600">
               {{ totalCategories }}
             </p>
@@ -122,7 +122,7 @@
             d="M12 6v6m0 0v6m0-6h6m-6 0H6"
           />
         </svg>
-        Add New Item
+        Tambah Barang Baru
       </button>
     </div>
 
@@ -131,8 +131,8 @@
       class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
     >
       <div class="px-6 py-4 border-b border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900">Items</h3>
-        <p v-if="!isLoading" class="text-sm text-gray-600 mt-1">{{ total }} items found</p>
+        <h3 class="text-lg font-semibold text-gray-900">Barang</h3>
+        <p v-if="!isLoading" class="text-sm text-gray-600 mt-1">{{ total }} barang ditemukan</p>
         <div v-else class="mt-2 h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
       </div>
 
@@ -143,27 +143,27 @@
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Stock Code
+                Kode Stok
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Part Number
+                Nomor Bagian
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Description
+                Deskripsi
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Created Date
+                Tanggal Dibuat
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Actions
+                Aksi
               </th>
             </tr>
           </thead>
@@ -202,7 +202,7 @@
                   @click="deleteItem(item)"
                   class="text-red-600 hover:text-red-900"
                 >
-                  Delete
+                  Hapus
                 </button>
               </td>
             </tr>
@@ -250,10 +250,10 @@
     <!-- Confirm Delete Modal -->
     <ConfirmModal
       :isOpen="isConfirmOpen"
-      title="Delete Item"
+      title="Hapus Barang"
       :message="confirmDeleteMessage"
-      confirmText="Delete"
-      cancelText="Cancel"
+      confirmText="Hapus"
+      cancelText="Batal"
       type="danger"
       @close="isConfirmOpen = false; pendingDeleteItem = null"
       @confirm="confirmDelete"
@@ -293,8 +293,8 @@ const lastPage = ref(1);
 const isConfirmOpen = ref(false)
 const pendingDeleteItem = ref(null)
 const confirmDeleteMessage = computed(() => {
-  const name = pendingDeleteItem.value?.part_number || pendingDeleteItem.value?.partNumber || 'this item'
-  return `Are you sure you want to delete item "${name}"?`
+  const name = pendingDeleteItem.value?.part_number || pendingDeleteItem.value?.partNumber || 'barang ini'
+  return `Apakah Anda yakin ingin menghapus barang "${name}"?`
 })
 
 // Derived state
@@ -347,7 +347,7 @@ const fetchItems = async () => {
     lastPage.value = Number(payload.last_page || 1);
   } catch (error) {
     console.error(error);
-    loadError.value = "Failed to load items.";
+    loadError.value = "Gagal memuat barang.";
   } finally {
     isLoading.value = false;
   }
@@ -365,7 +365,7 @@ const formatDate = (dateString) => {
   }
   const date = new Date(parsed);
   if (isNaN(date.getTime())) return String(dateString);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString("id-ID", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -403,16 +403,16 @@ const handleItemSubmit = async (itemData, type) => {
     };
     await createItem(payload);
     if (type === "create") {
-      showSuccess("Item added successfully!");
+      showSuccess("Barang berhasil ditambahkan!");
       currentPage.value = 1;
     } else {
-      showSuccess("Item updated successfully!");
+      showSuccess("Barang berhasil diperbarui!");
     }
     await fetchItems();
     return true;
   } catch (error) {
     console.error(error);
-    showError("Failed to add item.");
+    showError("Gagal menambahkan barang.");
     return false;
   }
 };
@@ -453,14 +453,14 @@ const confirmDelete = async () => {
   try {
     await deleteItemById(item.id ?? item._id ?? item.itemId)
     await fetchItems()
-    showSuccess('Item deleted successfully!')
+    showSuccess('Barang berhasil dihapus!')
     if (items.value.length === 0 && currentPage.value > 1) {
       currentPage.value = Math.max(1, currentPage.value - 1)
       await fetchItems()
     }
   } catch (error) {
     console.error(error)
-    showError('Failed to delete item.')
+    showError('Gagal menghapus barang.')
   } finally {
     pendingDeleteItem.value = null
   }

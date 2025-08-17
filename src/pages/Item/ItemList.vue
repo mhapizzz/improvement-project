@@ -19,7 +19,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Cari berdasarkan kode stok, nomor bagian, atau deskripsi..."
+            placeholder="Cari berdasarkan kode stok, part number, atau deskripsi..."
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -148,7 +148,7 @@
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Nomor Bagian
+              Part Number
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"

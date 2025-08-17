@@ -49,7 +49,7 @@
           >
             <option value="">Pilih Bidang Pengurutan</option>
             <option value="stock_code">Kode Stok</option>
-            <option value="part_number">Nomor Bagian</option>
+            <option value="part_number">Part Number</option>
             <option value="stock_on_hand">Stok Tersedia</option>
             <!-- <option value="updated_at">Terakhir Diperbarui</option> -->
           </select>
@@ -218,7 +218,7 @@
                 scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Nomor Bagian
+                Part Number
               </th>
               <th
                 scope="col"
@@ -349,7 +349,7 @@
                 scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Nomor Bagian
+                Part Number
               </th>
               <th
                 scope="col"
@@ -400,11 +400,14 @@
                   </div>
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
+                      {{ item.description || "Tidak Ada" }}
+                    </div>
+                    <!-- <div class="text-sm font-medium text-gray-900">
                       {{ item.stock_code || "Tidak Ada" }}
                     </div>
                     <div class="text-sm text-gray-500">
-                      {{ item.part_number || "Tidak ada nomor bagian" }}
-                    </div>
+                      {{ item.part_number || "Tidak ada part number" }}
+                    </div> -->
                   </div>
                 </div>
               </td>
@@ -493,14 +496,6 @@ const fetchInventory = async () => {
   loadError.value = null;
 
   try {
-    // Call the SOH API using GET method with query parameters
-    console.log("API Call Debug:", {
-      page: currentPage.value,
-      search: searchQuery.value,
-      sortBy: sortBy.value,
-      sortOrder: sortOrder.value,
-    });
-
     const response = await getSOHList(
       currentPage.value,
       searchQuery.value,
@@ -513,16 +508,10 @@ const fetchInventory = async () => {
       const responseData = response.data;
       const list = Array.isArray(responseData.data) ? responseData.data : [];
 
-      console.log("API Response Debug:", {
-        status: response.status,
-        message: response.message,
-        responseData: responseData,
-        listLength: list.length,
-      });
-
       // Normalize keys to match the API response structure
       inventoryItems.value = list.map((raw) => ({
         id: raw.id,
+        description: raw.description,
         stock_code: raw.stock_code,
         part_number: raw.part_number,
         quantity: Number(raw.stock_on_hand) || 0,

@@ -266,7 +266,7 @@
                 <!-- Part Number (Read-only) -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Nomor Part</label
+                    >Part Number</label
                   >
                   <input
                     :value="getItemDetails(item.item_id)?.part_number || ''"

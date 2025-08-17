@@ -23,11 +23,14 @@
               v-model="searchQuery"
               type="text"
               placeholder="Cari berdasarkan nama barang, kode, atau deskripsi..."
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              class="w-full px-3 py-2 font-medium border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               @input="handleSearch"
               :disabled="isLoading"
             />
-            <div v-if="isLoading" class="absolute right-3 top-1/2 transform -translate-y-1/2">
+            <div
+              v-if="isLoading"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2"
+            >
               <div class="animate-pulse h-4 w-4 bg-gray-200 rounded"></div>
             </div>
           </div>
@@ -41,7 +44,7 @@
           <select
             v-model="sortBy"
             @change="handleSort"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            class="w-full px-3 py-2 font-medium border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             :disabled="isLoading"
           >
             <option value="">Pilih Bidang Pengurutan</option>
@@ -60,21 +63,21 @@
           <select
             v-model="sortOrder"
             @change="handleSort"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            class="w-full px-3 py-2 border font-medium border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             :disabled="isLoading"
           >
             <option value="">Pilih Urutan</option>
-            <option value="asc">Menaik</option>
-            <option value="desc">Menurun</option>
+            <option value="asc">ASC</option>
+            <option value="desc">DESC</option>
           </select>
         </div>
 
         <!-- Refresh Button -->
-        <div class="flex items-end">
+        <div class="flex-1 flex items-end">
           <button
             @click="fetchInventory"
             :disabled="isLoading"
-            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200 font-medium shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            class="flex justify-center items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200 font-medium shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               class="w-4 h-4"
@@ -89,7 +92,7 @@
                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
               />
             </svg>
-            {{ isLoading ? 'Memuat...' : 'Segarkan' }}
+            {{ isLoading ? "Memuat..." : "Segarkan" }}
           </button>
         </div>
       </div>
@@ -116,8 +119,13 @@
           </div>
           <div class="ml-4">
             <p class="text-sm font-medium text-gray-600">Total Barang</p>
-            <p v-if="!isLoading" class="text-2xl font-bold text-blue-600">{{ totalItems }}</p>
-            <div v-else class="h-8 bg-gray-200 rounded animate-pulse w-16"></div>
+            <p v-if="!isLoading" class="text-2xl font-bold text-blue-600">
+              {{ totalItems }}
+            </p>
+            <div
+              v-else
+              class="h-8 bg-gray-200 rounded animate-pulse w-16"
+            ></div>
           </div>
         </div>
       </div>
@@ -141,8 +149,13 @@
           </div>
           <div class="ml-4">
             <p class="text-sm font-medium text-gray-600">Tersedia</p>
-            <p v-if="!isLoading" class="text-2xl font-bold text-green-600">{{ inStockCount }}</p>
-            <div v-else class="h-8 bg-gray-200 rounded animate-pulse w-12"></div>
+            <p v-if="!isLoading" class="text-2xl font-bold text-green-600">
+              {{ inStockCount }}
+            </p>
+            <div
+              v-else
+              class="h-8 bg-gray-200 rounded animate-pulse w-12"
+            ></div>
           </div>
         </div>
       </div>
@@ -166,8 +179,13 @@
           </div>
           <div class="ml-4">
             <p class="text-sm font-medium text-gray-600">Stok Menipis</p>
-            <p v-if="!isLoading" class="text-2xl font-bold text-yellow-600">{{ lowStockCount }}</p>
-            <div v-else class="h-8 bg-gray-200 rounded animate-pulse w-12"></div>
+            <p v-if="!isLoading" class="text-2xl font-bold text-yellow-600">
+              {{ lowStockCount }}
+            </p>
+            <div
+              v-else
+              class="h-8 bg-gray-200 rounded animate-pulse w-12"
+            ></div>
           </div>
         </div>
       </div>
@@ -259,10 +277,22 @@
       <!-- Error State -->
       <div v-else-if="loadError" class="p-6 text-center">
         <div class="text-red-600">
-          <svg class="mx-auto h-12 w-12 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          <svg
+            class="mx-auto h-12 w-12 text-red-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+            />
           </svg>
-          <h3 class="mt-2 text-sm font-medium text-gray-900">Gagal memuat inventaris</h3>
+          <h3 class="mt-2 text-sm font-medium text-gray-900">
+            Gagal memuat inventaris
+          </h3>
           <p class="mt-1 text-sm text-gray-500">{{ loadError }}</p>
           <div class="mt-6">
             <button
@@ -277,11 +307,25 @@
 
       <!-- Empty State -->
       <div v-else-if="inventoryItems.length === 0" class="p-6 text-center">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        <svg
+          class="mx-auto h-12 w-12 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+          />
         </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada barang inventaris</h3>
-        <p class="mt-1 text-sm text-gray-500">Mulai dengan menambahkan beberapa barang ke inventaris Anda.</p>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">
+          Tidak ada barang inventaris
+        </h3>
+        <p class="mt-1 text-sm text-gray-500">
+          Mulai dengan menambahkan beberapa barang ke inventaris Anda.
+        </p>
       </div>
 
       <!-- Inventory Table -->
@@ -336,27 +380,43 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="flex-shrink-0 h-10 w-10">
-                    <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-                      <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    <div
+                      class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center"
+                    >
+                      <svg
+                        class="h-6 w-6 text-green-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                        />
                       </svg>
                     </div>
                   </div>
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ item.stock_code || 'Tidak Ada' }}
+                      {{ item.stock_code || "Tidak Ada" }}
                     </div>
                     <div class="text-sm text-gray-500">
-                      {{ item.part_number || 'Tidak ada nomor bagian' }}
+                      {{ item.part_number || "Tidak ada nomor bagian" }}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ item.stock_code || 'Tidak Ada' }}</div>
+                <div class="text-sm text-gray-900">
+                  {{ item.stock_code || "Tidak Ada" }}
+                </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ item.part_number || 'Tidak Ada' }}</div>
+                <div class="text-sm text-gray-900">
+                  {{ item.part_number || "Tidak Ada" }}
+                </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">
@@ -367,30 +427,29 @@
                 <span
                   :class="[
                     'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                    getStatusClass(item.quantity, 0)
+                    getStatusClass(item.quantity, 0),
                   ]"
                 >
                   {{ getStatusText(item.quantity, 0) }}
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-500">{{ formatDate(item.updated_at) }}</div>
+                <div class="text-sm text-gray-500">
+                  {{ formatDate(item.updated_at) }}
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      <!-- Pagination -->
-      <div class="px-6 py-3 border-t border-gray-200">
-        <Pagination
-          :current-page="currentPage"
-          :total-items="total"
-          :items-per-page="itemsPerPage"
-          @page-change="handlePageChange"
-        />
-      </div>
     </div>
+
+    <Pagination
+      :current-page="currentPage"
+      :total-items="total"
+      :items-per-page="itemsPerPage"
+      @page-change="handlePageChange"
+    />
   </div>
 </template>
 
@@ -417,14 +476,14 @@ const lastPage = ref(1);
 const totalItems = computed(() => total.value);
 
 const inStockCount = computed(() => {
-  return inventoryItems.value.filter(item => 
-    item.quantity && item.quantity > 0
+  return inventoryItems.value.filter(
+    (item) => item.quantity && item.quantity > 0
   ).length;
 });
 
 const lowStockCount = computed(() => {
-  return inventoryItems.value.filter(item => 
-    item.quantity && item.quantity <= 0
+  return inventoryItems.value.filter(
+    (item) => item.quantity && item.quantity <= 0
   ).length;
 });
 
@@ -432,35 +491,35 @@ const lowStockCount = computed(() => {
 const fetchInventory = async () => {
   isLoading.value = true;
   loadError.value = null;
-  
+
   try {
     // Call the SOH API using GET method with query parameters
-    console.log('API Call Debug:', {
+    console.log("API Call Debug:", {
       page: currentPage.value,
       search: searchQuery.value,
       sortBy: sortBy.value,
-      sortOrder: sortOrder.value
+      sortOrder: sortOrder.value,
     });
-    
+
     const response = await getSOHList(
       currentPage.value,
       searchQuery.value,
       sortBy.value,
       sortOrder.value
     );
-    
+
     // Handle the response structure: { status, message, data: { current_page, data: [...], ... } }
     if (response.status === 200 && response.data) {
       const responseData = response.data;
       const list = Array.isArray(responseData.data) ? responseData.data : [];
-      
-      console.log('API Response Debug:', {
+
+      console.log("API Response Debug:", {
         status: response.status,
         message: response.message,
         responseData: responseData,
-        listLength: list.length
+        listLength: list.length,
       });
-      
+
       // Normalize keys to match the API response structure
       inventoryItems.value = list.map((raw) => ({
         id: raw.id,
@@ -470,16 +529,16 @@ const fetchInventory = async () => {
         created_at: raw.created_at,
         updated_at: raw.updated_at,
         // Set default values for missing fields
-        name: raw.stock_code || 'Tidak Ada',
-        code: raw.part_number || 'Tidak Ada',
-        description: raw.stock_code || 'Tidak Ada',
-        category: 'Umum',
+        name: raw.stock_code || "Tidak Ada",
+        code: raw.part_number || "Tidak Ada",
+        description: raw.stock_code || "Tidak Ada",
+        category: "Umum",
         min_quantity: 0,
-        unit: 'pcs',
-        site: 'Tidak Ada',
-        plant: 'Tidak Ada',
+        unit: "pcs",
+        site: "Tidak Ada",
+        plant: "Tidak Ada",
       }));
-      
+
       // Update pagination from the response
       total.value = Number(responseData.total || 0);
       pageFrom.value = Number(responseData.from || 0);
@@ -487,22 +546,21 @@ const fetchInventory = async () => {
       lastPage.value = Number(responseData.last_page || 1);
       // Don't override currentPage here as it might interfere with pagination
       // currentPage.value = Number(responseData.current_page || 1);
-      
+
       // Debug pagination data
-      console.log('Pagination Debug:', {
+      console.log("Pagination Debug:", {
         total: total.value,
         from: pageFrom.value,
         to: pageTo.value,
         lastPage: lastPage.value,
-        currentPage: currentPage.value
+        currentPage: currentPage.value,
       });
     } else {
-      throw new Error(response.message || 'Format respons tidak valid');
+      throw new Error(response.message || "Format respons tidak valid");
     }
-    
   } catch (error) {
-    console.error('Error fetching inventory:', error);
-    loadError.value = error.message || 'Gagal memuat data inventaris';
+    console.error("Error fetching inventory:", error);
+    loadError.value = error.message || "Gagal memuat data inventaris";
   } finally {
     isLoading.value = false;
   }
@@ -530,35 +588,35 @@ const handleSort = () => {
 };
 
 const handlePageChange = (page) => {
-  console.log('Page change requested:', page);
+  console.log("Page change requested:", page);
   currentPage.value = page;
   fetchInventory();
 };
 
 const getStatusClass = (quantity, minQuantity) => {
   if (quantity < 0) {
-    return 'bg-red-100 text-red-800'; // Negative stock
+    return "bg-red-100 text-red-800"; // Negative stock
   }
   if (!quantity || quantity === 0) {
-    return 'bg-red-100 text-red-800'; // Out of stock
+    return "bg-red-100 text-red-800"; // Out of stock
   }
   if (minQuantity && quantity <= minQuantity) {
-    return 'bg-yellow-100 text-yellow-800'; // Low stock
+    return "bg-yellow-100 text-yellow-800"; // Low stock
   }
-  return 'bg-green-100 text-green-800'; // In stock
+  return "bg-green-100 text-green-800"; // In stock
 };
 
 const getStatusText = (quantity, minQuantity) => {
   if (quantity < 0) {
-    return 'Stok Negatif';
+    return "Stok Negatif";
   }
   if (!quantity || quantity === 0) {
-    return 'Habis Stok';
+    return "Habis Stok";
   }
   if (minQuantity && quantity <= minQuantity) {
-    return 'Stok Menipis';
+    return "Stok Menipis";
   }
-  return 'Tersedia';
+  return "Tersedia";
 };
 
 const formatDate = (dateString) => {

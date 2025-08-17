@@ -12,8 +12,8 @@
       >
         <div class="flex justify-between items-center">
           <h2 class="text-2xl font-bold">
-            {{ isEditing ? "Edit" : "New" }}
-            {{ type === "in" ? "Stock IN" : "Stock OUT" }}
+            {{ isEditing ? "Ubah" : "Baru" }}
+            {{ type === "in" ? "Stok Masuk" : "Stok Keluar" }}
           </h2>
           <button
             @click="closeModal"
@@ -40,19 +40,19 @@
         <!-- Header Information -->
         <div class="mb-8">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">
-            Transaction Information
+            Informasi Transaksi
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- PO Number (only for Stock IN) -->
             <div v-if="type === 'in'">
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >PO Number</label
+                >Nomor PO</label
               >
               <input
                 v-model="formData.poNumber"
                 type="text"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter PO Number"
+                placeholder="Masukkan Nomor PO"
                 required
               />
             </div>
@@ -60,13 +60,13 @@
             <!-- SPB Number (only for Stock IN) -->
             <div v-if="type === 'in'">
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >SPB Number</label
+                >Nomor SPB</label
               >
               <input
                 v-model="formData.spbNumber"
                 type="text"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter SPB Number"
+                placeholder="Masukkan Nomor SPB"
                 required
               />
             </div>
@@ -74,13 +74,13 @@
             <!-- Reservation Number (only for Stock OUT) -->
             <div v-if="type === 'out'">
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Reservation Number</label
+                >Nomor Reservasi</label
               >
               <input
                 v-model="formData.reservationNumber"
                 type="text"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter Reservation Number"
+                placeholder="Masukkan Nomor Reservasi"
                 required
               />
             </div>
@@ -88,7 +88,7 @@
             <!-- Date -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Date</label
+                >Tanggal</label
               >
               <input
                 v-model="formData.date"
@@ -101,13 +101,14 @@
             <!-- Site -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Site</label
+                >Lokasi</label
               >
               <input
                 v-model="formData.site"
                 type="text"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter Site"
+                placeholder="Masukkan Lokasi"
+                disabled
                 required
               />
             </div>
@@ -115,13 +116,14 @@
             <!-- Plant -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Plant</label
+                >Pabrik</label
               >
               <input
                 v-model="formData.plant"
                 type="text"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter Plant"
+                placeholder="Masukkan Pabrik"
+                disabled
                 required
               />
             </div>
@@ -129,13 +131,13 @@
             <!-- Sender (only for Stock IN) -->
             <div v-if="type === 'in'">
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Sender</label
+                >Pengirim</label
               >
               <input
                 v-model="formData.sender"
                 type="text"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter Sender Name"
+                placeholder="Masukkan Nama Pengirim"
                 required
               />
             </div>
@@ -143,13 +145,13 @@
             <!-- Recipient (only for Stock OUT) -->
             <div v-if="type === 'out'">
               <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Recipient</label
+                >Penerima</label
               >
               <input
                 v-model="formData.recipient"
                 type="text"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter Recipient Name"
+                placeholder="Masukkan Nama Penerima"
                 required
               />
             </div>
@@ -159,7 +161,7 @@
         <!-- Items Section -->
         <div class="mb-8">
           <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold text-gray-900">Items</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Barang</h3>
             <button
               type="button"
               @click="addItem"
@@ -178,7 +180,7 @@
                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
-              Add Item
+              Tambah Barang
             </button>
           </div>
 
@@ -191,7 +193,7 @@
             >
               <div class="flex justify-between items-center mb-3">
                 <h4 class="text-sm font-medium text-gray-700">
-                  Item {{ index + 1 }}
+                  Barang {{ index + 1 }}
                 </h4>
                 <button
                   type="button"
@@ -219,7 +221,7 @@
                 <!-- Item Selection -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Select Item</label
+                    >Pilih Barang</label
                   >
                   <select
                     v-model="item.item_id"
@@ -228,9 +230,9 @@
                     required
                     :disabled="isLoadingItems"
                   >
-                    <option value="">Select an item</option>
+                    <option value="">Pilih barang</option>
                     <option v-if="isLoadingItems" value="" disabled>
-                      Loading items...
+                      Memuat barang...
                     </option>
                     <option
                       v-else
@@ -246,7 +248,7 @@
                 <!-- Stock Code (Read-only) -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Stock Code</label
+                    >Kode Stok</label
                   >
                   <div
                     v-if="isLoadingItems"
@@ -264,7 +266,7 @@
                 <!-- Part Number (Read-only) -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Part Number</label
+                    >Nomor Part</label
                   >
                   <input
                     :value="getItemDetails(item.item_id)?.part_number || ''"
@@ -277,7 +279,7 @@
                 <!-- Description (Read-only) -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Description</label
+                    >Deskripsi</label
                   >
                   <input
                     :value="getItemDetails(item.item_id)?.description || ''"
@@ -290,14 +292,14 @@
                 <!-- Quantity -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Quantity</label
+                    >Jumlah</label
                   >
                   <input
                     v-model.number="item.qty"
                     type="number"
                     min="1"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter Quantity"
+                    placeholder="Masukkan Jumlah"
                     required
                   />
                 </div>
@@ -313,7 +315,7 @@
             @click="closeModal"
             class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200 font-medium"
           >
-            Cancel
+            Batal
           </button>
           <button
             type="submit"
@@ -341,10 +343,10 @@
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>
               </svg>
-              {{ isEditing ? "Updating..." : "Saving..." }}
+              {{ isEditing ? "Memperbarui..." : "Menyimpan..." }}
             </span>
             <span v-else>{{
-              isEditing ? "Update Transaction" : "Save Transaction"
+              isEditing ? "Perbarui Transaksi" : "Simpan Transaksi"
             }}</span>
           </button>
         </div>
@@ -395,8 +397,8 @@ const formData = reactive({
   spbNumber: "",
   reservationNumber: "",
   date: "",
-  site: "",
-  plant: "",
+  site: "AGM Blok 4",
+  plant: "30G3",
   sender: "", // Only for stock in
   recipient: "", // Only for stock out
   items: [
@@ -423,7 +425,7 @@ const fetchAvailableItems = async () => {
     }));
   } catch (error) {
     console.error("Failed to fetch items:", error);
-    showError("Failed to load available items");
+    showError("Gagal memuat daftar barang");
   } finally {
     isLoadingItems.value = false;
   }
@@ -462,8 +464,8 @@ const resetForm = () => {
   formData.spbNumber = "";
   formData.reservationNumber = "";
   formData.date = "";
-  formData.site = "";
-  formData.plant = "";
+  formData.site = "AGM Blok 4";
+  formData.plant = "30G3";
   formData.sender = "";
   formData.recipient = "";
   formData.items = [
@@ -572,18 +574,14 @@ const handleSubmit = async () => {
       console.log("_id being sent:", payload.id);
       response = await updateStockTransaction(payload);
       showSuccess(
-        `${
-          props.type === "in" ? "Stock IN" : "Stock OUT"
-        } transaction updated successfully!`
+        `${props.type === "in" ? "Transaksi Stok Masuk" : "Transaksi Stok Keluar"} berhasil diperbarui!`
       );
     } else {
       // For creates
       console.log("Creating transaction with payload:", payload);
       response = await createStockTransaction(payload);
       showSuccess(
-        `${
-          props.type === "in" ? "Stock IN" : "Stock OUT"
-        } transaction created successfully!`
+        `${props.type === "in" ? "Transaksi Stok Masuk" : "Transaksi Stok Keluar"} berhasil dibuat!`
       );
     }
 
@@ -595,9 +593,9 @@ const handleSubmit = async () => {
   } catch (error) {
     console.error("Failed to save transaction:", error);
     showError(
-      `Failed to ${
-        props.isEditing ? "update" : "create"
-      } transaction. Please try again.`
+      props.isEditing
+        ? "Gagal memperbarui transaksi. Silakan coba lagi."
+        : "Gagal membuat transaksi. Silakan coba lagi."
     );
   } finally {
     isSubmitting.value = false;
@@ -619,20 +617,20 @@ const validateForm = () => {
   // Basic validation
   if (!formData.date || !formData.site || !formData.plant) {
     showError(
-      "Please fill in all required fields in the transaction information section."
+      "Harap isi semua kolom yang wajib di bagian informasi transaksi."
     );
     return false;
   }
 
   if (props.type === "in") {
     if (!formData.poNumber || !formData.spbNumber || !formData.sender) {
-      showError("Please fill in all required fields for Stock IN transaction.");
+      showError("Harap isi semua kolom yang wajib untuk transaksi Stok Masuk.");
       return false;
     }
   } else {
     if (!formData.reservationNumber || !formData.recipient) {
       showError(
-        "Please fill in all required fields for Stock OUT transaction."
+        "Harap isi semua kolom yang wajib untuk transaksi Stok Keluar."
       );
       return false;
     }
@@ -642,11 +640,11 @@ const validateForm = () => {
   for (let i = 0; i < formData.items.length; i++) {
     const item = formData.items[i];
     if (!item.item_id || !item.qty) {
-      showError(`Please fill in all fields for item ${i + 1}.`);
+      showError(`Harap lengkapi semua kolom untuk barang ${i + 1}.`);
       return false;
     }
     if (item.qty <= 0) {
-      showError(`Quantity for item ${i + 1} must be greater than 0.`);
+      showError(`Jumlah untuk barang ${i + 1} harus lebih dari 0.`);
       return false;
     }
   }

@@ -296,7 +296,7 @@
       </div>
 
       <!-- Recent Activity -->
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <!-- <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-6">
           Aktivitas Terbaru
         </h3>
@@ -353,7 +353,7 @@
         >
           Lihat semua aktivitas
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

@@ -520,7 +520,7 @@ const fetchInventory = async () => {
         // Set default values for missing fields
         name: raw.stock_code || "Tidak Ada",
         code: raw.part_number || "Tidak Ada",
-        description: raw.stock_code || "Tidak Ada",
+        description: raw.description || "Tidak Ada",
         category: "Umum",
         min_quantity: 0,
         unit: "pcs",

@@ -240,7 +240,7 @@
                       :key="availableItem.id"
                       :value="availableItem.id"
                     >
-                      {{ availableItem.stock_code }}
+                      {{ availableItem.description }}
                     </option>
                   </select>
                 </div>
